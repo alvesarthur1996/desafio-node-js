@@ -36,9 +36,11 @@ const FindUser = async (userId, res) => {
 
 exports.get = (req, res) => {
     const { authorization } = req.headers;
+    if (!authorization) return res.status(400).json({ message: 'Missing Authorization header' });
+
     const token = authorization.replace('Bearer ', '');
 
-    jwt.verify(token, process.env.SECRET_JWT, (err, decoded) => {
+    return jwt.verify(token, process.env.SECRET_JWT, (err, decoded) => {
         if (err) {
             return res.status(401).json({ message: 'Token is invalid or expired.' });
         }
