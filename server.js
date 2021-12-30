@@ -9,4 +9,4 @@ app.use(cors());
 
 require('./src/routes/index')(app);
 
-app.listen(3333);
+app.listen(process.env.PORT || 3333);
