@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "web": "npm start"
+    "web": "npm start",
+    "test": "node tests/index.test | tap-spec"
   },
   "dependencies": {
     "body-parser": "^1.19.1",
@@ -17,7 +18,9 @@
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
     "sequelize": "^6.12.4",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "tap-spec": "^5.0.0",
+    "tape": "^5.4.0"
   },
   "devDependencies": {
     "eslint": "^8.5.0",

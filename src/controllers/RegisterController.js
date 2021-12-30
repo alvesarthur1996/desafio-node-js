@@ -3,6 +3,7 @@ const User = require('../models/User');
 const Telephone = require('../models/Telephone');
 
 const ValidateEmail = (email) => {
+    if (!email) return false;
     const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return email.toLowerCase().match(regex);
 };
@@ -61,5 +62,4 @@ const RegisterUser = async (data, res) => {
 };
 
 exports.post = (req, res) => RegisterUser(req.body, res);
-
-// TODO validar dados antes de persistir
+exports.ValidateEmail = ValidateEmail;
