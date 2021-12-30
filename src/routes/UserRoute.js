@@ -1,5 +1,5 @@
 const UserController = require('../controllers/UserController');
 
 module.exports = (app) => {
-    app.get('/search', UserController.get);
+    app.get('/user', UserController.get);
 };

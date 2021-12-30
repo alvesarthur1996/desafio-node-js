@@ -2,9 +2,25 @@ const md5 = require('md5');
 const User = require('../models/User');
 const Telephone = require('../models/Telephone');
 
+const ValidateEmail = (email) => {
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return email.toLowerCase().match(regex);
+};
+
 const RegisterUser = async (data, res) => {
     let resUser;
     let creating = false;
+
+    if (!data.telephones || typeof data.telephones === 'undefined') return res.status(400).json({ message: 'At least a phone number is required.' });
+    if (data.telephones.filter((item) => typeof item.number !== 'number' || typeof item.area_code !== 'number').length) {
+        return res.status(400).json({ message: 'Telephones number and area_code must be a number.' });
+    }
+    if (!data.name || typeof data.name === 'undefined') return res.status(400).json({ message: 'Name is required.' });
+    if (typeof data.name !== 'string') return res.status(400).json({ message: 'Name must be a string.' });
+    if (!data.email || typeof data.email === 'undefined') return res.status(400).json({ message: 'E-mail is required.' });
+    if (typeof data.email !== 'string') return res.status(400).json({ message: 'E-mail must be a string.' });
+    if (!ValidateEmail(data.email)) return res.status(400).json({ message: 'Invalid e-mail.' });
+    if (!data.password || typeof data.password === 'undefined') return res.status(400).json({ message: 'Password is required.' });
 
     await User.findOrCreate({
         where: {
